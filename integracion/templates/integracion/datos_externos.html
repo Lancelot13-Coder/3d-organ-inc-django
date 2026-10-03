@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block titulo %}Datos del Microservicio{% endblock %}
+{% block encabezado %}Datos desde el Microservicio Externo{% endblock %}
+
+{% block contenido %}
+    <p>
+        Esta página no consulta la base de datos local (SQLite) de
+        3D-Organ-Inc. En vez de eso, le pide los Datos a este Microservicio de Supabase:
+        <br><code>{{ url_microservicio }}</code>
+    </p>
+
+    {% if error %}
+        <div class="caja" style="border-color:#c0392b; color:#c0392b;">
+            <strong>No se pudo obtener la Conexion con el Microservicio.</strong>
+            <p>Detalle Técnico: {{ error }}</p>
+            <p>
+                Esto es normal si todavía no se ha desplegado el microservicio,
+                o si la URL en <code>MICROSERVICIO_URL</code>
+                (archivo <code>config/settings.py</code>) esta mal puesta o 
+                escrita, al igual que puede ser por que la conexion fallo o 
+                esta mal ejecutada.
+            </p>
+        </div>
+    {% elif datos %}
+        <div class="caja">
+            <strong>Respuesta recibida:</strong>
+            <pre>{{ datos }}</pre>
+        </div>
+        <!--
+            EJEMPLO: cuando definas la forma real del JSON que devuelve
+            tu microservicio, reemplaza el <pre>{{ datos }}</pre> de arriba
+            por algo como:
+
+            <ul>
+                {% for item in datos %}
+                    <li>{{ item.nombre }} - {{ item.valor }}</li>
+                {% endfor %}
+            </ul>
+        -->
+    {% else %}
+        <p>El microservicio respondió, pero sin datos para mostrar.</p>
+    {% endif %}
+{% endblock %}

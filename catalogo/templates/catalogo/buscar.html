@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block titulo %}Buscador de Modelos 3D{% endblock %}
+{% block encabezado %}Buscar en el catálogo de Modelos 3D{% endblock %}
+
+{% block contenido %}
+    <form method="get" action="{% url 'catalogo:buscar' %}">
+        <input type="text" name="q" value="{{ consulta }}" placeholder="Escribe nombre del Modelo 3D...">
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if consulta %}
+        <h2>Resultados para el Modelo denominado: "{{ consulta }}"</h2>
+        {% if resultados %}
+            <ul>
+                {% for elemento in resultados %}
+                    <li><a href="{% url 'catalogo:detalle' elemento.id %}">{{ elemento.nombre }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No se encontro el Modelo con esa Denominacion</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block titulo %}Reporte: {{ categoria.nombre }}{% endblock %}
+{% block encabezado %}Reporte de categoría: {{ categoria.nombre }}{% endblock %}
+
+{% block contenido %}
+    {% if elementos %}
+        <ul>
+            {% for elemento in elementos %}
+                <li>
+                    <a href="{% url 'catalogo:detalle' elemento.id %}">{{ elemento.nombre }}</a>
+                    — registrado el {{ elemento.fecha_registro|date:"d/m/Y" }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Esta categoría no tiene elementos registrados.</p>
+    {% endif %}
+
+    <p><a href="{% url 'reportes:resumen' %}">&larr; Volver al panel de reportes</a></p>
+{% endblock %}

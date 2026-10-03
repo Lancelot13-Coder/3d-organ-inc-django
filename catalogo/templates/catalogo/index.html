@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block titulo %}Catálogo de Modelos 3D{% endblock %}
+{% block encabezado %}Catálogo de Modelos 3D de 3D-Organ-Inc{% endblock %}
+
+{% block contenido %}
+    <h2>Categorías de Modelos 3D existentes</h2>
+    {% if categorias %}
+        <ul>
+            {% for categoria in categorias %}
+                <li>
+                    <a href="{% url 'catalogo:por_categoria' categoria.slug %}">
+                        {{ categoria.nombre }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay categorías de Mpdelos creadas todavía. Créalas desde /admin/.</p>
+    {% endif %}
+
+    <h2>Últimos Modelos 3D Agregados</h2>
+    {% if lista_elementos %}
+        <ul>
+            {% for elemento in lista_elementos %}
+                <li class="caja">
+                    <a href="{% url 'catalogo:detalle' elemento.id %}">{{ elemento.nombre }}</a>
+                    — <em>{{ elemento.categoria.nombre }}</em>
+                    {% if elemento.fue_registrado_recientemente %}
+                        <strong>(nuevo)</strong>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay elementos disponibles. Crea algunos desde /admin/.</p>
+    {% endif %}
+{% endblock %}

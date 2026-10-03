@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}Asistente de IA{% endblock %}
+{% block encabezado %}Pregúntale a la IA sobre bioimpresión 3D de órganos{% endblock %}
+
+{% block contenido %}
+    <form method="post">
+        {% csrf_token %}
+        <input
+            type="text"
+            name="pregunta"
+            value="{{ pregunta }}"
+            placeholder="Ej: ¿Qué biomateriales se usan para imprimir tejido cardíaco?"
+            style="width: 70%;"
+        >
+        <button type="submit">Preguntar</button>
+    </form>
+
+    {% if error %}
+        <div class="caja" style="border-color:#c0392b; color:#c0392b;">
+            <strong>{{ error }}</strong>
+            <p>Si el error menciona la API key, revisa GOOGLE_AI_API_KEY.</p>
+        </div>
+    {% elif respuesta %}
+        <div class="caja"><strong>Pregunta:</strong> {{ pregunta }}</div>
+        <div class="caja">
+            <strong>Respuesta de la IA:</strong>
+            <p>{{ respuesta|linebreaksbr }}</p>
+        </div>
+    {% else %}
+        <p>Escribe una pregunta arriba para empezar.</p>
+    {% endif %}
+{% endblock %}

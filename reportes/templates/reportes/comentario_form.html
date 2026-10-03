@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    {% if modo == "editar" %}Editar comentario{% else %}Nuevo comentario{% endif %}
+{% endblock %}
+{% block encabezado %}
+    {% if modo == "editar" %}
+        Editar comentario en "{{ elemento.nombre }}"
+    {% else %}
+        Nuevo comentario en "{{ elemento.nombre }}"
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+    <form method="post" class="caja">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+        <a href="{% url 'catalogo:detalle' elemento.id %}">Cancelar</a>
+    </form>
+{% endblock %}

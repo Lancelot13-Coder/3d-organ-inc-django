@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %}Eliminar comentario{% endblock %}
+{% block encabezado %}¿Eliminar este comentario?{% endblock %}
+
+{% block contenido %}
+    <div class="caja">
+        <p>"{{ comentario.texto }}"</p>
+        <small>{{ comentario.fecha|date:"d/m/Y H:i" }}</small>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sí, eliminar</button>
+        <a href="{% url 'catalogo:detalle' comentario.elemento.id %}">Cancelar</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Modelos 3D en la Nube{% endblock %}
+{% block encabezado %}Modelos 3D en la Nube (Supabase){% endblock %}
+
+{% block contenido %}
+    {% include "modelos_nube/_selector.html" %}
+    {% if origen_lectura %}<p><small>Datos servidos por: <strong>{{ origen_lectura }}</strong></small></p>{% endif %}
+    <p><a href="{% url 'modelos_nube:crear' %}">+ Agregar Modelo 3D</a></p>
+    {% if error %}
+        <div class="caja" style="border-color:#c0392b; color:#c0392b;">{{ error }}</div>
+    {% elif modelos %}
+        <table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%;">
+            <tr><th>Nombre</th><th>Categoría</th><th>Activo</th><th>Acciones</th></tr>
+            {% for modelo in modelos %}
+                <tr>
+                    <td>{{ modelo.nombre }}</td>
+                    <td>{{ modelo.categoria }}</td>
+                    <td>{% if modelo.activo %}Sí{% else %}No{% endif %}</td>
+                    <td>
+                        <a href="{% url 'modelos_nube:editar' modelo.id %}">Editar</a> &middot;
+                        <a href="{% url 'modelos_nube:eliminar' modelo.id %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Todavía no hay Modelos 3D en la nube. Agrega el primero.</p>
+    {% endif %}
+{% endblock %}

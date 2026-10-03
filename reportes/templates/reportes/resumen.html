@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titulo %}Reportes Conteo{% endblock %}
+{% block encabezado %}Panel de reportes/comentarios registrados{% endblock %}
+
+{% block contenido %}
+    <div class="caja">
+        <p><strong>Total de Modelos 3D:</strong> {{ total_elementos }}</p>
+        <p><strong>Total de Comentarios:</strong> {{ total_comentarios }}</p>
+    </div>
+
+    <h2>Modelos 3D por Categoría</h2>
+    {% if categorias_con_totales %}
+        <ul>
+            {% for categoria in categorias_con_totales %}
+                <li>
+                    <a href="{% url 'reportes:detalle_categoria' categoria.id %}">
+                        {{ categoria.nombre }}
+                    </a>
+                    — {{ categoria.total_elementos }} modelo(s)
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Todavía no hay categorías especificas registradas.</p>
+    {% endif %}
+{% endblock %}

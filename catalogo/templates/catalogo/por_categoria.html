@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block titulo %}Categoría: {{ categoria.nombre }}{% endblock %}
+{% block encabezado %}Categoría: {{ categoria.nombre }}{% endblock %}
+
+{% block contenido %}
+    {% if elementos %}
+        <ul>
+            {% for elemento in elementos %}
+                <li class="caja">
+                    <a href="{% url 'catalogo:detalle' elemento.id %}">{{ elemento.nombre }}</a>
+
+                    {% with comentarios_elemento=elemento.comentarios.all %}
+                        {% if comentarios_elemento %}
+                            <ul>
+                                {% for comentario in comentarios_elemento %}
+                                    <li>
+                                        {{ comentario.texto }}
+                                        <small>({{ comentario.fecha|date:"d/m/Y" }})</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p><small>Sin comentarios todavía.</small></p>
+                        {% endif %}
+                    {% endwith %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Esta categoría todavía no tiene modelos 3d activos.</p>
+    {% endif %}
+
+    <p><a href="{% url 'catalogo:index' %}">&larr; Volver al catálogo de Modelos 3D</a></p>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ elemento.nombre }}{% endblock %}
+{% block encabezado %}{{ elemento.nombre }}{% endblock %}
+
+{% block contenido %}
+    <div class="caja">
+        <p><strong>Categoría del Modelo 3D:</strong>
+            <a href="{% url 'catalogo:por_categoria' elemento.categoria.slug %}">
+                {{ elemento.categoria.nombre }}
+            </a>
+        </p>
+        <p><strong>Descripción del Modelo:</strong> {{ elemento.descripcion|default:"(sin descripción)" }}</p>
+        <p><strong>Registrado en la fecha:</strong> {{ elemento.fecha_registro }}</p>
+        <p><strong>Estado del Modelo:</strong> {% if elemento.activo %}Activo{% else %}Inactivo{% endif %}</p>
+    </div>
+
+    <h2>Comentarios sobre este Modelo 3D</h2>
+    {% if comentarios %}
+        <ul>
+            {% for comentario in comentarios %}
+                <li class="caja">
+                    {{ comentario.texto }}
+                    <br>
+                    <small>{{ comentario.fecha|date:"d/m/Y H:i" }}</small>
+                    <br>
+                    <a href="{% url 'reportes:editar_comentario' comentario.id %}">Editar</a>
+                    &middot;
+                    <a href="{% url 'reportes:eliminar_comentario' comentario.id %}">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Este Modelo 3D todavía no tiene comentarios.</p>
+    {% endif %}
+
+    <p><a href="{% url 'reportes:crear_comentario' elemento.id %}">+ Agregar un comentario</a></p>
+
+    <p><a href="{% url 'catalogo:index' %}">&larr; Volver al catálogo de Modelos 3D</a></p>
+{% endblock %}

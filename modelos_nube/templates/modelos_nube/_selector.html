@@ -1,0 +1,21 @@
+<div class="caja">
+    <strong>Microservicio activo:</strong> {{ servicio_activo.nombre }}<br>
+    <small><code>{{ servicio_activo.url }}</code></small>
+    <form method="post" action="{% url 'modelos_nube:elegir' %}" style="margin-top: 0.7rem;">
+        {% csrf_token %}
+        <span>Trabajar con:</span>
+        {% for s in servicios %}
+            <button type="submit" name="servicio" value="{{ s.clave }}"
+                {% if s.activo %}disabled style="font-weight: bold;"{% endif %}>{{ s.nombre }}</button>
+        {% endfor %}
+    </form>
+    {% if resiliente_disponible %}
+    <form method="post" action="{% url 'modelos_nube:resiliente' %}" style="margin: 0.7rem 0 0.4rem;">
+        {% csrf_token %}
+        <span>Lectura resiliente: <strong>{% if resiliente_activo %}ACTIVADA{% else %}DESACTIVADA{% endif %}</strong></span>
+        <button type="submit">{% if resiliente_activo %}Desactivar{% else %}Activar{% endif %}</button>
+        <br><small>Si el servicio elegido falla al mostrar los datos, se consulta otro automáticamente. Crear, editar y eliminar siempre usan el servicio elegido.</small>
+    </form>
+    {% endif %}
+    <small>Si el servicio estaba dormido, la primera carga puede tardar hasta 1 minuto.</small>
+</div>

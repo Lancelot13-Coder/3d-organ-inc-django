@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}{% if modo == "editar" %}Editar{% else %}Nuevo{% endif %} Modelo 3D{% endblock %}
+{% block encabezado %}{% if modo == "editar" %}Editar{% else %}Nuevo{% endif %} Modelo 3D (Nube){% endblock %}
+
+{% block contenido %}
+    <p>Enviando a través del microservicio: <strong>{{ servicio_activo.nombre }}</strong></p>
+    {% if error %}<div class="caja" style="border-color:#c0392b; color:#c0392b;">{{ error }}</div>{% endif %}
+    <form method="post" class="caja">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+        <a href="{% url 'modelos_nube:listar' %}">Cancelar</a>
+    </form>
+{% endblock %}

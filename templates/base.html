@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titulo %}Proyecto Django 3D-Organ-Inc{% endblock %}</title>
+    <style>
+        /* EJEMPLO: estilos mínimos, reemplázalos por los tuyos o por un archivo estático */
+        body { font-family: Arial, sans-serif; margin: 2rem auto; max-width: 800px; color: #222; }
+        nav a { margin-right: 1rem; }
+        .caja { border: 1px solid #ddd; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; }
+        footer { margin-top: 2rem; font-size: 0.85rem; color: #777; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{% block encabezado %}Proyecto de 3D-Organ-Inc{% endblock %}</h1>
+        <nav>
+            <a href="{% url 'catalogo:index' %}">Catálogo de Modelos</a>
+            <a href="{% url 'catalogo:buscar' %}">Buscar algun Modelo en Especifico</a>
+            <a href="{% url 'reportes:resumen' %}">Conteo de Reportes/Comentarios en los Modelos</a>
+            <a href="{% url 'reportes:acerca' %}">Acerca de nosotros</a>
+            <a href="{% url 'asistente_ia:preguntar' %}">Asistente IA</a>
+            <a href="{% url 'modelos_nube:listar' %}">Modelos en la Nube</a>
+            <a href="{% url 'integracion:datos_externos' %}">Datos del Microservicio</a>
+            <a href="/admin/">Panel de Cargos Administrativos</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p> - Derechos reservados © 3D Organ-Inc - </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Eliminar Modelo 3D{% endblock %}
+{% block encabezado %}¿Eliminar este Modelo 3D de la nube?{% endblock %}
+
+{% block contenido %}
+    <p>Se eliminará a través del microservicio: <strong>{{ servicio_activo.nombre }}</strong></p>
+    {% if error %}<div class="caja" style="border-color:#c0392b; color:#c0392b;">{{ error }}</div>{% endif %}
+    {% if modelo %}
+        <div class="caja"><strong>{{ modelo.nombre }}</strong> ({{ modelo.categoria }})</div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Sí, eliminar</button>
+            <a href="{% url 'modelos_nube:listar' %}">Cancelar</a>
+        </form>
+    {% endif %}
+{% endblock %}
